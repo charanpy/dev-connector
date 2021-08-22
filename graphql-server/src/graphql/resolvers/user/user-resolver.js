@@ -8,13 +8,9 @@ const UserResolver = {
     },
   },
   Mutation: {
-    register: async (
-      parent,
-      { input: { email, password }, username },
-      { validate }
-    ) => {
-      validate({ email, password, username });
-      const user = await register({ email, username, password });
+    register: async (parent, { input: { email, password } }, { validate }) => {
+      validate({ email, password });
+      const user = await register({ email, password });
       return user;
     },
 

@@ -25,7 +25,7 @@ const user = gql`
   }
 
   type Mutation {
-    register(input: auth!, username: String!): User
+    register(input: auth!): User
     login(input: auth!): authData
     logout: String
   }

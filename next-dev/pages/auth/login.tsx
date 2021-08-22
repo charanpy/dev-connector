@@ -1,32 +1,12 @@
 import React, { useRef } from 'react';
-import { gql, useMutation } from '@apollo/client';
-
-const LOGIN = gql`
-  mutation Login($email: String!, $password: String!) {
-    login(input: { email: $email, password: $password }) {
-      token
-      user {
-        username
-      }
-    }
-  }
-`;
-
-const LOGOUT = gql`
-  mutation Logout {
-    logout
-  }
-`;
+import { useMutation } from '@apollo/client';
+import { LOGIN, LOGOUT } from '../../graphql/mutations/auth';
 
 const Login = () => {
   const emailRef = useRef<null | HTMLInputElement>(null);
   const passwordRef = useRef<null | HTMLInputElement>(null);
   const [login, { data, error }] = useMutation(LOGIN);
   const [logout] = useMutation(LOGOUT);
-  // console.log(data, error);
-  if (error) {
-    // console.log(error);
-  }
 
   const submitHandler = () => {
     const email = emailRef.current?.value;

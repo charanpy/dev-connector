@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const isEmail = require('validator/lib/isEmail');
+const Profile = require('./Profile');
 
 const UserSchema = new mongoose.Schema({
   email: {
@@ -9,13 +10,6 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     unique: true,
     validate: isEmail,
-  },
-
-  username: {
-    type: String,
-    trim: true,
-    default: 'Anonymous',
-    minlength: [2, 'Username should be minimum of 2 character long'],
   },
 
   google: {
@@ -48,6 +42,10 @@ UserSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, 10);
   }
   next();
+});
+
+UserSchema.post('save', async function (doc) {
+  await Profile.create({ user: doc._id });
 });
 
 UserSchema.methods.comparePassword = async function (dbPassword, userPassword) {

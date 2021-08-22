@@ -16,6 +16,7 @@ const permissions = shield(
       register: not(isAuthenticated),
       login: not(isAuthenticated),
       logout: isAuthenticated,
+      updateProfile: isAuthenticated,
     },
   },
   {

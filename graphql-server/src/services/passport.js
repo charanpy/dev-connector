@@ -19,7 +19,6 @@ const passportGoogle = (app) => {
           _json: { email },
         } = profile;
         const newUser = {
-          username,
           googleId,
           email,
           google: true,
@@ -57,7 +56,6 @@ const passportGoogle = (app) => {
         secure: process.env.NODE_ENV === 'prod',
         maxAge: 1000 * 60 * 60 * 24,
       });
-      // res.send('done');
       res.redirect('http://localhost:4000/');
     }
   );
