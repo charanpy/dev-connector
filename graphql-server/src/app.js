@@ -1,15 +1,17 @@
 const express = require('express');
 require('dotenv').config();
-// const cors = require('cors');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const graphqlServer = require('./graphql');
 const app = express();
 
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin: 'https://studio.apollographql.com',
-//   })
-// );
+app.use(
+  cors({
+    origin: ['http://localhost:4000', 'https://studio.apollographql.com'],
+    credentials: true,
+  })
+);
+app.use(cookieParser());
 
 require('./services/passport')(app);
 console.log(process.env.NODE_ENV, 22);
@@ -19,7 +21,7 @@ console.log(process.env.NODE_ENV, 22);
     app,
     path: '/api/graphql',
     cors: {
-      origin: '*',
+      origin: ['http://localhost:4000', 'https://studio.apollographql.com'],
       credentials: true,
     },
   });

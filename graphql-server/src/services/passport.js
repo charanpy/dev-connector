@@ -52,12 +52,13 @@ const passportGoogle = (app) => {
     }),
     async function (req, res) {
       const token = await generateToken({ id: req.user._id }, '1d');
-      res.cookie('devConnector-session', token, {
+      res.cookie('devConnectorSession', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'prod',
         maxAge: 1000 * 60 * 60 * 24,
       });
-      return res.send('done');
+      // res.send('done');
+      res.redirect('http://localhost:4000/');
     }
   );
 };

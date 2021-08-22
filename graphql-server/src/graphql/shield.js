@@ -15,6 +15,7 @@ const permissions = shield(
     Mutation: {
       register: not(isAuthenticated),
       login: not(isAuthenticated),
+      logout: isAuthenticated,
     },
   },
   {

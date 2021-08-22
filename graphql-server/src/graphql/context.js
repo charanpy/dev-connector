@@ -2,32 +2,25 @@ const { verifyToken } = require('../lib/jwt');
 const validate = require('../lib/validators/validator');
 const User = require('../models/User');
 
-const ctxData = {
-  userId: null,
+const constructContext = (res, userId = null) => ({
+  userId,
   validate,
   User,
-};
+  res,
+});
 
-const context = async (req) => {
-  let token;
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
-    token = req.headers.authorization.split(' ')[1];
-  }
+const context = async (req, res) => {
+  const token = req?.cookies[process.env.COOKIE];
   if (!token) {
-    return ctxData;
+    return constructContext(res);
   }
 
   const user = await verifyToken(token);
+  console.log(user, 223);
   if (!user) {
-    return null;
+    return constructContext(res);
   }
-  return {
-    ...ctxData,
-    userId: user._id,
-  };
+  return constructContext(res, user._id);
 };
 
 module.exports = context;

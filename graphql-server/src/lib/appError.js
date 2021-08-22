@@ -12,9 +12,6 @@ const handleCastErrorDb = (err) => {
 };
 
 const handleDuplicateFieldErrorDb = (error) => {
-  console.log('====================================');
-  console.log(error);
-  console.log('====================================');
   const keyField = Object.keys(error.keyValue)[0]; // 400
   return [`Please use different ${keyField}`];
 };
@@ -32,6 +29,8 @@ const appError = (error) => {
 
   if (error.name === 'CastError' || error.kind === 'ObjectId')
     return handleCastErrorDb(error);
+
+  return [error?.message || error?.name || 'Server error'];
 };
 
 module.exports = appError;

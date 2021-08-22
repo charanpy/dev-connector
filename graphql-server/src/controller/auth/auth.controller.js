@@ -1,4 +1,3 @@
-const { UserInputError } = require('apollo-server-errors');
 const User = require('../../models/User');
 const catchAsync = require('../../lib/promise');
 const { generateToken } = require('../../lib/jwt');
@@ -16,7 +15,7 @@ exports.login = catchAsync(async (req) => {
   if (!user || !(await user.comparePassword(password, user.password))) {
     console.log('err');
 
-    throw new UserInputError('Invalid credentials');
+    throw new Error('Invalid credentials');
   }
   console.log('noerr');
 

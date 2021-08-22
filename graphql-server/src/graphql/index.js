@@ -4,8 +4,8 @@ const graphqlContext = require('./context');
 
 const apolloServer = new ApolloServer({
   schema,
-  context: async ({ req }) => {
-    const user = await graphqlContext(req);
+  context: async ({ req, res }) => {
+    const user = await graphqlContext(req, res);
     return user;
   },
   playground: true,
