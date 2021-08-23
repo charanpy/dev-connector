@@ -10,7 +10,7 @@ const constructContext = (res, userId = null) => ({
 });
 
 const context = async (req, res) => {
-  const token = req?.cookies[process.env.COOKIE];
+  const token = req?.cookies[process.env.COOKIE] || req.headers.authorization;
   if (!token) {
     return constructContext(res);
   }
