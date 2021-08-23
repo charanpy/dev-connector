@@ -14,6 +14,7 @@ const PrivateComponent: FC<Auth> = ({ Component }) => {
   const { data, error, loading } = useQuery(User, {
     fetchPolicy: 'cache-and-network',
   });
+  console.log(data);
 
   return <>{!loading && <Component user={data.me} />}</>;
 };

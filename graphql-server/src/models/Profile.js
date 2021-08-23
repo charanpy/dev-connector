@@ -58,7 +58,7 @@ const ProfileSchema = new mongoose.Schema({
       projectLink: {
         type: String,
       },
-      githubLink: {
+      github: {
         type: String,
       },
     },

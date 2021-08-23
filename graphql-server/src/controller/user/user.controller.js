@@ -1,6 +1,7 @@
 const User = require('../../models/User');
 const catchAsync = require('../../lib/promise');
 const { generateToken } = require('../../lib/jwt');
+const { Profile } = require('../../models');
 const fields = 'username _id password google';
 
 exports.register = catchAsync(async (req) => {
@@ -24,4 +25,18 @@ exports.login = catchAsync(async (req) => {
     token,
     user,
   };
+});
+
+exports.updateUserProfile = catchAsync(async (req) => {
+  const {
+    userId,
+    profile: { socialLinks, projects, ...profileData },
+  } = req;
+  let query = { ...profileData };
+  if (socialLinks) query = { ...query, socialLinks };
+  if (projects) query = { ...query, $push: { projects } };
+  return await Profile.findOneAndUpdate({ user: userId }, query, {
+    runValidators: true,
+    new: true,
+  });
 });

@@ -34,7 +34,7 @@ const profile = gql`
     user:ID
     ${sharedProfileFields}
     socialLinks: SocialLinksField
-    projects: [ProjectField]
+    projects: ProjectField
   }
 
   type Query {

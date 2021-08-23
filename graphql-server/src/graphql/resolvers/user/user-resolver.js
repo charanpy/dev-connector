@@ -1,8 +1,8 @@
-const { register, login } = require('../../../controller/auth/auth.controller');
+const { register, login } = require('../../../controller/user/user.controller');
 
 const UserResolver = {
   Query: {
-    me: async (_, args, { userId, User }) => {
+    me: async (_, args, { userId, models: { User } }) => {
       const user = await User.findById(userId);
       return user;
     },

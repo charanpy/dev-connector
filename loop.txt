@@ -1,0 +1,57 @@
+const a = {
+  a:1,
+  b:{
+    c:2,
+    d:3,
+    e:{
+      f:4
+    }
+  }
+}
+
+const loop2 = (obj,cb) => {
+    for(let i in obj) {
+        cb(i,obj)
+    }
+}
+
+const isObject = (item) => {
+  return !!(
+    typeof item === 'object' &&
+    !Array.isArray(item) &&
+    item !== null &&
+    Object.entries(item).length
+  );
+};
+
+const log = (key,data) => console.log(key,data,'log');
+const validate = (i,a) => {
+    const key = i;
+  const value = a[i];
+    if(!isObject(value)) {
+        return log(key,value);
+    }
+    return loop2(value,validate)
+};
+
+loop2(a,validate);
+
+
+const validateCredentials = (credentials) => {
+  if (!isObject(credentials)) {
+    throw new UserInputError(constructErrorMessages('emptyObject'));
+  }
+
+  for (let index in credentials) {
+    const [isValid, message, key = null] = validateInput(
+      index,
+      credentials[index],
+      validators
+    );
+    if (!isValid) {
+      throw new UserInputError(constructErrorMessages(message, key), '400');
+    }
+  }
+
+  return true;
+};

@@ -11,7 +11,7 @@ const sharedProjectField = `
     title: String!
     description: String
     projectLink: String
-    githubLink: String
+    github: String
 `;
 
 const sharedLinkField = `
